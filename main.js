@@ -1,6 +1,66 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, Menu} = require('electron')
 const path = require('path')
+
+const isMac = process.platform === 'darwin'
+
+const template = [
+  // { role: 'appMenu' }
+  ...(isMac ? [{
+    label: app.name,
+    submenu: [
+      { role: 'about' },
+      { type: 'separator' },
+      { role: 'services' },
+      { type: 'separator' },
+      { role: 'hide' },
+      { role: 'hideothers' },
+      { role: 'unhide' },
+      { type: 'separator' },
+      { role: 'quit' }
+    ]
+  }] : []),
+  // { role: 'fileMenu' }
+  {
+    label: 'File',
+    submenu: [
+      isMac ? { role: 'close' } : { role: 'quit' },
+    ]
+  },
+  {
+    label: 'Database',
+    click (item, focusedWindow) {
+      if (focusedWindow) ambrero();
+    }
+  },
+  {
+    label: 'View',
+    submenu: [
+      { role: 'reload' },
+      { role: 'forceReload' },
+      { role: 'toggleDevTools' },
+    ]
+  }
+]
+
+const menu = Menu.buildFromTemplate(template)
+Menu.setApplicationMenu(menu)
+
+function ambrero(){
+   // Create the browser window.
+   const miniWindow = new BrowserWindow({
+    minWidth: 400,
+    minHeight: 300,
+    maxWidth: 400,
+    maxHeight: 300,
+    width: 400,
+    height: 300
+  });
+  miniWindow.removeMenu();
+
+  // and load the index.html of the app.
+  miniWindow.loadFile('./renderers/summary/summary.html');
+}
 
 function createWindow () {
   // Create the browser window.
@@ -15,22 +75,10 @@ function createWindow () {
   })
 
   // and load the index.html of the app.
-  mainWindow.loadFile('index.html');
+  mainWindow.loadFile('./index.html');
   mainWindow.maximize();
 
-  // Create the browser window.
-  const miniWindow = new BrowserWindow({
-    minWidth: 400,
-    minHeight: 300,
-    maxWidth: 400,
-    maxHeight: 300,
-    width: 400,
-    height: 300
-  });
-  miniWindow.removeMenu();
-
-  // and load the index.html of the app.
-  miniWindow.loadFile('mini.html');
+ 
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
