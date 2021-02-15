@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summary</title>
+    <link rel="stylesheet" href="./styles.css" />
+
+</head>
+<body>
+    <div class="registration">
+        <div class="box disable-select">
+            <div class="box-content">
+              <div class="input-block" >
+                First <input id="first" type="text">
+              </div>
+              <div class="input-block">
+                Second <input id="second" type="text">
+              </div>
+              <br>
+              <label class="container">Summary
+                <input type="checkbox" checked="checked">
+                <span class="checkmark"></span>
+              </label>
+            
+            </div>
+            <div class="box-footer">
+              <div class="button" id="getit">
+                Submit
+              </div>
+              <div class="button">
+                Cancel
+              </div>
+        </div>  
+        <div class="validation-bar">
+            <span id="validation-bar-span" class="success">Successfully</span>
+        </div>
+    </div>
+    
+    <script>
+        document.querySelector('#getit').addEventListener('click', function(){
+            var first = document.querySelector('#first').value;
+            var second = document.querySelector('#second').value;
+            document.querySelector('#validation-bar-span').innerHTML = first + second;
+        });
+    </script>
+</body>
+</html>
