@@ -1,0 +1,10 @@
+{
+    "subwindows":
+    {
+        "summary": {
+            "width": 400,
+            "height": 300,
+            "template": "./renderers/summary/summary.html"
+        }
+    }
+}

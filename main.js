@@ -1,68 +1,29 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow, Menu} = require('electron')
 const path = require('path')
+const config = require('./config.json');
 
 const isMac = process.platform === 'darwin'
 
-const template = [
-  // { role: 'appMenu' }
-  ...(isMac ? [{
-    label: app.name,
-    submenu: [
-      { role: 'about' },
-      { type: 'separator' },
-      { role: 'services' },
-      { type: 'separator' },
-      { role: 'hide' },
-      { role: 'hideothers' },
-      { role: 'unhide' },
-      { type: 'separator' },
-      { role: 'quit' }
-    ]
-  }] : []),
-  // { role: 'fileMenu' }
-  {
-    label: 'File',
-    submenu: [
-      isMac ? { role: 'close' } : { role: 'quit' },
-    ]
-  },
-  {
-    label: 'Database',
-    click (item, focusedWindow) {
-      if (focusedWindow) ambrero();
+function createSubwindow(config){
+   const subWindow = new BrowserWindow({
+    minWidth: config.width,
+    minHeight: config.height,
+    maxWidth: config.width,
+    maxHeight: config.height,
+    width: config.width,
+    height: config.height,
+    webPreferences: {
+      nodeIntegration: true,
+      enableRemoteModule: true
     }
-  },
-  {
-    label: 'View',
-    submenu: [
-      { role: 'reload' },
-      { role: 'forceReload' },
-      { role: 'toggleDevTools' },
-    ]
-  }
-]
-
-const menu = Menu.buildFromTemplate(template)
-Menu.setApplicationMenu(menu)
-
-function ambrero(){
-   // Create the browser window.
-   const miniWindow = new BrowserWindow({
-    minWidth: 400,
-    minHeight: 300,
-    maxWidth: 400,
-    maxHeight: 300,
-    width: 400,
-    height: 300
   });
-  miniWindow.removeMenu();
-
-  // and load the index.html of the app.
-  miniWindow.loadFile('./renderers/summary/summary.html');
+  subWindow.removeMenu();
+  subWindow.loadFile(config.template);
+  // subWindow.webContents.openDevTools()
 }
 
-function createWindow () {
+function createMainWindow () {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     minWidth: 1280,
@@ -70,7 +31,8 @@ function createWindow () {
     width: 1280,
     height: 720,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: true
     }
   })
 
@@ -88,7 +50,7 @@ function createWindow () {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-  createWindow()
+  createMainWindow()
   
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
@@ -106,3 +68,42 @@ app.on('window-all-closed', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+const template = [
+  // { role: 'appMenu' }
+  ...(isMac ? [{
+    label: app.name,
+    submenu: [
+      { role: 'about' },
+      { type: 'separator' },
+      { role: 'services' },
+      { type: 'separator' },
+      { role: 'hide' },
+      { role: 'hideothers' },
+      { role: 'unhide' },
+      { type: 'separator' },
+      { role: 'quit' }
+    ]
+  }] : []),
+  {
+    label: 'File',
+    submenu: [
+      isMac ? { role: 'close' } : { role: 'quit' },
+    ]
+  },
+  {
+    label: 'Summary',
+    click (item, focusedWindow) {
+      if (focusedWindow) createSubwindow(config.subwindows.summary);
+    }
+  },
+  // {
+  //   label: 'View',
+  //   submenu: [
+  //     { role: 'reload' },
+  //     { role: 'forceReload' },
+  //     { role: 'toggleDevTools' },
+  //   ]
+  // }
+]
+const menu = Menu.buildFromTemplate(template)
+Menu.setApplicationMenu(menu)

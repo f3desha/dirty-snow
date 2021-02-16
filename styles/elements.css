@@ -1,18 +1,4 @@
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 12pt;
-    background-color: grey;
-    color: rgb(36, 36, 36);
-}
-.disable-select{
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -o-user-select: none;
-    user-select: none;
-}
+/********CHECKBOXES STYLE START************/
 /* Customize the label (the container) */
 .container {
     display: block;
@@ -69,6 +55,9 @@ body {
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
   }
+/********CHECKBOXES STYLE END**************/
+
+/********INPUT START***********************/
   input:focus, textarea:focus, select:focus{
     outline: none;
   }
@@ -83,6 +72,28 @@ body {
       background-color: rgb(211, 211, 211);
       color: rgb(53, 53, 53);
   }
+/********INPUT END*************************/
+
+/********BUTTON START**********************/
+.button {
+    cursor: pointer;
+    padding: 5px 10px;
+    display: inline-block;
+    background-color: rgb(240, 240, 240);
+    border-radius: 2px;
+    position: relative;
+}
+.button:hover{
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+.button:active{
+    top: 1px;
+    left: 1px;
+}
+/********BUTTON END************************/
+
+
+/********BOX START*************************/
 .box{
     position: relative;
     background-color: rgb(168, 168, 168);
@@ -103,6 +114,12 @@ body {
 .box-content{
     padding: 10px;
 }
+.box-footer{
+    padding: 10px;
+ }
+/********BOX END***************************/
+
+/********FOOTER BAR START******************/
 .validation-bar{
     position: absolute;
     width: 100%;
@@ -121,24 +138,4 @@ body {
 .validation-bar .success {
     color: rgb(26, 26, 26);
 }
-.box-footer{
-   padding: 10px;
-}
-.button {
-    cursor: pointer;
-    padding: 5px 10px;
-    display: inline-block;
-    background-color: rgb(240, 240, 240);
-    border-radius: 2px;
-    position: relative;
-}
-.button:hover{
-    box-shadow: 0 0 5px rgba(0,0,0,0.5);
-}
-.button:active{
-    top: 1px;
-    left: 1px;
-}
-.registration input {
-    width: 250px;
-}
+/********FOOTER BAR END********************/
