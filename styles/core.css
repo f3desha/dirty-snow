@@ -6,6 +6,10 @@ body {
     font-size: 12pt;
     background-color: grey;
     color: rgb(36, 36, 36);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 .disable-select{
     -webkit-user-select: none;
@@ -13,5 +17,27 @@ body {
     -moz-user-select: none;
     -o-user-select: none;
     user-select: none;
+}
+.avatar{
+    border-radius: 2px;
+    height: 40px;
+    width: 40px;
+    float: right;
+}
+.avatar-holder{
+    border-bottom-left-radius: 2px;
+    position: absolute;
+    right: 0;
+    background-color: rgb(65, 65, 65);
+    display: inline-block;
+    margin: 0;
+    padding: 10px;
+}
+.name-holder{
+    padding-top: 15px;
+    color:rgb(173, 173, 173);
+    padding-right: 10px;
+    display: block;
+    float: left;
 }
 /*********GENERAL END***********/

@@ -5,6 +5,12 @@
             "width": 400,
             "height": 250,
             "template": "./renderers/summary/summary.html"
+        },
+        "linkedinlogin": {
+            "width": 900,
+            "height": 700,
+            "show": false,
+            "template": "./renderers/linkedin-login/linkedin-login.html"
         }
     }
 }
