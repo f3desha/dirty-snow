@@ -3,7 +3,7 @@
     {
         "summary": {
             "width": 400,
-            "height": 300,
+            "height": 250,
             "template": "./renderers/summary/summary.html"
         }
     }

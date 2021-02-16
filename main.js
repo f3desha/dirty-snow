@@ -2,6 +2,7 @@
 const {app, BrowserWindow, Menu} = require('electron')
 const path = require('path')
 const config = require('./config.json');
+const linkedinModule = require('./modules/linkedin-helper/Linkedin');
 
 const isMac = process.platform === 'darwin'
 
@@ -51,6 +52,8 @@ function createMainWindow () {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   createMainWindow()
+  const Linkedin = new linkedinModule();
+  Linkedin.caller();
   
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
