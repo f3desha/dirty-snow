@@ -15,13 +15,14 @@ ipcRenderer.on('profile-update', (event, token) => {
     Linkedin.oauthProfileCaller(token)
     .then((data) => {
         let imageUrl = data.profilePicture["displayImage~"].elements[0].identifiers[0].identifier;
-        console.log(data);
-        ipcRenderer.send('download-url', {
+        let send = {
             user_id: data.id,
             url: imageUrl,
             firstName: data.localizedFirstName,
-            lastName: data.localizedLastName
-        });
+            lastName: data.localizedLastName,
+            auth_token: token
+        };
+        ipcRenderer.send('user-init', send);
     })
     .catch((reject) => {
       console.log(reject);

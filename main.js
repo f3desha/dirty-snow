@@ -6,7 +6,7 @@ const config = require('./config.json');
 const https = require('https');
 const fs   = require('fs');
 const isMac = process.platform === 'darwin'
-let linkedinToken = null;
+let applicationUser = null;
 let mainMenu = null;
 
 /********MENU TEMPLATE START *************** */
@@ -90,6 +90,7 @@ function userLoggedIn(){
 }
 
 function userLoggedOut(){
+  applicationUser = null;
   //Menu rebuilds
   mainMenu.getMenuItemById('login-menu').visible = true;
   mainMenu.getMenuItemById('logout-menu').visible = false;
@@ -221,9 +222,9 @@ ipcMain.on('oauth-link-received', function(event1, args) {
           .then(() => {
             session.defaultSession.cookies.get({name: 'auth_token', domain: 'www.linkedin.com'})
             .then((cookies) => {
-              linkedinToken = cookies[0].value;
+              let tempToken = cookies[0].value;
               event1.sender.send('token-received',true);
-              mainWindow.webContents.send('profile-update',linkedinToken);
+              mainWindow.webContents.send('profile-update',tempToken);
               subWindow.close();
               userLoggedIn();
             }).catch((error) => {
@@ -242,7 +243,18 @@ ipcMain.on('oauth-link-received', function(event1, args) {
 });
 });
 
-ipcMain.on('download-url', (event, obj) => {
+ipcMain.on('user-init', (event, obj) => {
+
+  applicationUser = {
+    id: 'session_user_object',
+    firstName: obj.firstName,
+    lastName: obj.lastName,
+    linkedin_id: obj.user_id,
+    avatarPath: './files/images/avatars/'+obj.user_id+'.jpg',
+    auth_token: obj.auth_token
+  };
+  console.log(applicationUser);
+
   download(obj.url, obj.user_id+'.jpg').then(function(data){
     mainWindow.webContents.send('avatar-uploaded',obj);
   });  
