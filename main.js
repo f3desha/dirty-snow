@@ -10,6 +10,7 @@ let linkedinToken = null;
 let linkedinWindow = null;
 let summaryWindow = null;
 
+/***********FUNCTIONS******** */
 function linkedinLogin(){
   linkedinWindow = createSubwindow(config.subwindows.linkedinlogin);
 }
@@ -38,7 +39,125 @@ function createSubwindow(config){
   return subWindow;
 }
 
-ipcMain.on('oauthLinkReceived', function(event1, args) {
+function createMainWindow () {
+
+  const template = [
+    // { role: 'appMenu' }
+    ...(isMac ? [{
+      label: app.name,
+      submenu: [
+        { role: 'about' },
+        { type: 'separator' },
+        { role: 'services' },
+        { type: 'separator' },
+        { role: 'hide' },
+        { role: 'hideothers' },
+        { role: 'unhide' },
+        { type: 'separator' },
+        { role: 'quit' }
+      ]
+    }] : []),
+    {
+      label: 'File',
+      submenu: [
+        isMac ? { role: 'close' } : { role: 'quit' },
+      ]
+    },
+    {
+      label: 'Menu',
+      submenu: [
+        {
+          label: 'Summary',
+          accelerator: isMac ? 'Alt+Cmd+I' : 'Alt+Ctrl+I',
+          click (item, focusedWindow) {
+            console.log(linkedinToken);
+          if (focusedWindow) getSummary();;
+         }
+        },
+        {
+          label: 'Login',
+          accelerator: isMac ? 'Alt+Cmd+L' : 'Alt+Ctrl+L',
+          click (item, focusedWindow) {
+           if (focusedWindow) linkedinLogin();
+          }
+        }
+      ]
+    },
+    {
+      label: 'View',
+      submenu: [
+        { role: 'reload' },
+        { role: 'forceReload' },
+        { role: 'toggleDevTools' },
+      ]
+    }
+  ]
+  const menu = Menu.buildFromTemplate(template)
+  Menu.setApplicationMenu(menu)
+
+  // Create the browser window.
+  mainWindow = new BrowserWindow({
+    minWidth: 1280,
+    minHeight: 720,
+    width: 1280,
+    height: 720,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: true,
+      enableRemoteModule: true
+    }
+  })
+
+  // and load the index.html of the app.
+  mainWindow.loadFile('./index.html');
+  mainWindow.maximize();
+
+  
+  // Open the DevTools.
+  // mainWindow.webContents.openDevTools()
+}
+
+const download = async (url, filename) => {
+  return new Promise((resolve, reject) => {
+    var file = fs.createWriteStream("./files/images/avatars/"+filename);
+    var request = https.get(url, function(response) {
+    response.pipe(file);
+    resolve(1);
+    });
+  });
+};
+/**********FUNCTIONS END***************** */
+
+// This method will be called when Electron has finished
+// initialization and is ready to create browser windows.
+// Some APIs can only be used after this event occurs.
+app.whenReady().then(() => {
+  createMainWindow()
+  
+  app.on('activate', function () {
+    // On macOS it's common to re-create a window in the app when the
+    // dock icon is clicked and there are no other windows open.
+    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+  })
+
+})
+
+
+
+// In this file you can include the rest of your app's specific main process
+// code. You can also put them in separate files and require them here.
+
+
+
+/*************LISTENERS ************ */
+// Quit when all windows are closed, except on macOS. There, it's common
+// for applications and their menu bar to stay active until the user quits
+// explicitly with Cmd + Q.
+app.on('window-all-closed', function () {
+  if (process.platform !== 'darwin') app.quit()
+})
+
+ipcMain.on('oauth-link-received', function(event1, args) {
   const subWindow = new BrowserWindow({
     frame: false,
     minWidth: 700,
@@ -92,117 +211,9 @@ ipcMain.on('oauthLinkReceived', function(event1, args) {
 });
 });
 
-function createMainWindow () {
-
-  const template = [
-    // { role: 'appMenu' }
-    ...(isMac ? [{
-      label: app.name,
-      submenu: [
-        { role: 'about' },
-        { type: 'separator' },
-        { role: 'services' },
-        { type: 'separator' },
-        { role: 'hide' },
-        { role: 'hideothers' },
-        { role: 'unhide' },
-        { type: 'separator' },
-        { role: 'quit' }
-      ]
-    }] : []),
-    {
-      label: 'File',
-      submenu: [
-        isMac ? { role: 'close' } : { role: 'quit' },
-      ]
-    },
-    {
-      label: 'Menu',
-      submenu: [
-        {
-          label: 'Summary',
-          click (item, focusedWindow) {
-            console.log(linkedinToken);
-          if (focusedWindow) getSummary();;
-         }
-        },
-        {
-          label: 'Login',
-          click (item, focusedWindow) {
-           if (focusedWindow) linkedinLogin();
-          }
-        }
-      ]
-    },
-    {
-      label: 'View',
-      submenu: [
-        { role: 'reload' },
-        { role: 'forceReload' },
-        { role: 'toggleDevTools' },
-      ]
-    }
-  ]
-  const menu = Menu.buildFromTemplate(template)
-  Menu.setApplicationMenu(menu)
-
-  // Create the browser window.
-  mainWindow = new BrowserWindow({
-    minWidth: 1280,
-    minHeight: 720,
-    width: 1280,
-    height: 720,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
-      nodeIntegration: true,
-      enableRemoteModule: true
-    }
-  })
-
-  // and load the index.html of the app.
-  mainWindow.loadFile('./index.html');
-  mainWindow.maximize();
-
-  
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools()
-}
-
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.whenReady().then(() => {
-  createMainWindow()
-  
-  app.on('activate', function () {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
-  })
-
-})
-
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
-app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') app.quit()
-})
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
-const download = async (url) => {
-  return new Promise((resolve, reject) => {
-    var file = fs.createWriteStream("./files/temp/file.jpg");
-    var request = https.get(url, function(response) {
-    response.pipe(file);
-    resolve(1);
-    });
-  });
-};
-
 ipcMain.on('download-url', (event, obj) => {
-  download(obj.url).then(function(data){
+  download(obj.url, obj.user_id+'.jpg').then(function(data){
     mainWindow.webContents.send('avatar-uploaded',obj);
   });  
 });
+/*************LISTENERS END********* */
