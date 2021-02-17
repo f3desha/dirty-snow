@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow, Menu, session, dialog} = require('electron')
+const {app, BrowserWindow, Menu, session} = require('electron')
 const ipcMain = require('electron').ipcMain;
 const path = require('path')
 const config = require('./config.json');
@@ -7,16 +7,14 @@ const https = require('https');
 const fs   = require('fs');
 const isMac = process.platform === 'darwin'
 let linkedinToken = null;
-let linkedinWindow = null;
-let summaryWindow = null;
 
 /***********FUNCTIONS******** */
 function linkedinLogin(){
-  linkedinWindow = createSubwindow(config.subwindows.linkedinlogin);
+  createSubwindow(config.subwindows.linkedinlogin);
 }
 
 function getSummary(){
-  summaryWindow = createSubwindow(config.subwindows.summary);  
+  createSubwindow(config.subwindows.summary);  
 }
 
 function createSubwindow(config){
@@ -118,13 +116,18 @@ function createMainWindow () {
 }
 
 const download = async (url, filename) => {
-  return new Promise((resolve, reject) => {
-    var file = fs.createWriteStream("./files/images/avatars/"+filename);
-    var request = https.get(url, function(response) {
-    response.pipe(file);
-    resolve(1);
-    });
+  return await new Promise((resolve, reject) => {
+      if (!fs.existsSync("./files/images/avatars/"+filename)) {
+        var file = fs.createWriteStream("./files/images/avatars/"+filename);
+        var request = https.get(url, function(response) {
+        response.pipe(file);
+        resolve(1);
+      });
+    } else {
+      resolve(2);
+    }
   });
+
 };
 /**********FUNCTIONS END***************** */
 
