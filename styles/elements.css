@@ -135,3 +135,28 @@
     color: rgb(26, 26, 26);
 }
 /********FOOTER BAR END********************/
+
+/********AVATAR BAR START************/
+.avatar{
+  border-radius: 2px;
+  height: 40px;
+  width: 40px;
+  float: right;
+}
+.avatar-holder{
+  border-bottom-left-radius: 2px;
+  position: absolute;
+  right: 0;
+  background-color: rgb(65, 65, 65);
+  display: inline-block;
+  margin: 0;
+  padding: 10px;
+}
+.name-holder{
+  padding-top: 15px;
+  color:rgb(173, 173, 173);
+  padding-right: 10px;
+  display: block;
+  float: left;
+}
+/********AVATAR BAR END**************/

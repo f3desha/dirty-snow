@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow, Menu, session} = require('electron')
+const {app, BrowserWindow, Menu, session, dialog, MenuItem} = require('electron')
 const ipcMain = require('electron').ipcMain;
 const path = require('path')
 const config = require('./config.json');
@@ -7,10 +7,92 @@ const https = require('https');
 const fs   = require('fs');
 const isMac = process.platform === 'darwin'
 let linkedinToken = null;
+let mainMenu = null;
+
+/********MENU TEMPLATE START *************** */
+const template = [
+  // { role: 'appMenu' }
+  ...(isMac ? [{
+    label: app.name,
+    submenu: [
+      { role: 'about' },
+      { type: 'separator' },
+      { role: 'services' },
+      { type: 'separator' },
+      { role: 'hide' },
+      { role: 'hideothers' },
+      { role: 'unhide' },
+      { type: 'separator' },
+      { role: 'quit' }
+    ]
+  }] : []),
+  {
+    label: 'File',
+    submenu: [
+      isMac ? { role: 'close' } : { role: 'quit' },
+    ]
+  },
+  {
+    label: 'Menu',
+    submenu: [
+      {
+        label: 'Summary',
+        accelerator: isMac ? 'Alt+Cmd+I' : 'Alt+Ctrl+I',
+        click (item, focusedWindow) {
+          console.log(linkedinToken);
+        if (focusedWindow) getSummary();;
+       }
+      },
+      {
+        label: 'Login',
+        id: 'login-menu',
+        accelerator: isMac ? 'Alt+Cmd+L' : 'Alt+Ctrl+L',
+        click (item, focusedWindow) {
+         if (focusedWindow) linkedinLogin();
+        }
+      },
+      {
+        label: 'Logout',
+        id: 'logout-menu',
+        visible: false,
+        accelerator: isMac ? 'Alt+Cmd+L' : 'Alt+Ctrl+L',
+        click (item, focusedWindow) {
+         if (focusedWindow) linkedinLogout();
+        }
+      }
+    ]
+  },
+  // {
+  //   label: 'View',
+  //   submenu: [
+  //     { role: 'reload' },
+  //     { role: 'forceReload' },
+  //     { role: 'toggleDevTools' },
+  //   ]
+  // }
+]
+mainMenu = Menu.buildFromTemplate(template);
+/*******MENU TEMPLATE ENDS*****************/
 
 /***********FUNCTIONS******** */
 function linkedinLogin(){
   createSubwindow(config.subwindows.linkedinlogin);
+}
+
+function linkedinLogout(){
+  userLoggedOut();
+}
+
+function userLoggedIn(){
+  //Menu rebuilds
+  mainMenu.getMenuItemById('login-menu').visible = false;
+  mainMenu.getMenuItemById('logout-menu').visible = true;
+}
+
+function userLoggedOut(){
+  //Menu rebuilds
+  mainMenu.getMenuItemById('login-menu').visible = true;
+  mainMenu.getMenuItemById('logout-menu').visible = false;
 }
 
 function getSummary(){
@@ -37,61 +119,11 @@ function createSubwindow(config){
   return subWindow;
 }
 
-function createMainWindow () {
+function createMainMenu(){
+  Menu.setApplicationMenu(mainMenu)
+}
 
-  const template = [
-    // { role: 'appMenu' }
-    ...(isMac ? [{
-      label: app.name,
-      submenu: [
-        { role: 'about' },
-        { type: 'separator' },
-        { role: 'services' },
-        { type: 'separator' },
-        { role: 'hide' },
-        { role: 'hideothers' },
-        { role: 'unhide' },
-        { type: 'separator' },
-        { role: 'quit' }
-      ]
-    }] : []),
-    {
-      label: 'File',
-      submenu: [
-        isMac ? { role: 'close' } : { role: 'quit' },
-      ]
-    },
-    {
-      label: 'Menu',
-      submenu: [
-        {
-          label: 'Summary',
-          accelerator: isMac ? 'Alt+Cmd+I' : 'Alt+Ctrl+I',
-          click (item, focusedWindow) {
-            console.log(linkedinToken);
-          if (focusedWindow) getSummary();;
-         }
-        },
-        {
-          label: 'Login',
-          accelerator: isMac ? 'Alt+Cmd+L' : 'Alt+Ctrl+L',
-          click (item, focusedWindow) {
-           if (focusedWindow) linkedinLogin();
-          }
-        }
-      ]
-    },
-    {
-      label: 'View',
-      submenu: [
-        { role: 'reload' },
-        { role: 'forceReload' },
-        { role: 'toggleDevTools' },
-      ]
-    }
-  ]
-  const menu = Menu.buildFromTemplate(template)
-  Menu.setApplicationMenu(menu)
+function createMainWindow () {
 
   // Create the browser window.
   mainWindow = new BrowserWindow({
@@ -135,8 +167,9 @@ const download = async (url, filename) => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+  createMainMenu()
   createMainWindow()
-  
+
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
@@ -186,21 +219,16 @@ ipcMain.on('oauth-link-received', function(event1, args) {
           const cookie = { url: 'https://www.linkedin.com', name: 'auth_token', value: html }
           session.defaultSession.cookies.set(cookie)
           .then(() => {
-            
-      
-      
             session.defaultSession.cookies.get({name: 'auth_token', domain: 'www.linkedin.com'})
             .then((cookies) => {
               linkedinToken = cookies[0].value;
               event1.sender.send('token-received',true);
               mainWindow.webContents.send('profile-update',linkedinToken);
               subWindow.close();
+              userLoggedIn();
             }).catch((error) => {
               console.log(error)
             })
-      
-      
-      
           }, (error) => {
             console.error(error)
           })
