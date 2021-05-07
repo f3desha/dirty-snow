@@ -39,7 +39,6 @@ const template = [
         label: 'Summary',
         accelerator: isMac ? 'Alt+Cmd+I' : 'Alt+Ctrl+I',
         click (item, focusedWindow) {
-          console.log(linkedinToken);
         if (focusedWindow) getSummary();;
        }
       },
