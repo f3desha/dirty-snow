@@ -1,7 +1,7 @@
 {
-  "name": "electron-quick-start",
+  "name": "dirty-snow",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "A minimal Electron application boilerplate",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
