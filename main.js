@@ -37,7 +37,6 @@ const template = [
     submenu: [
       {
         label: 'Summary',
-        accelerator: isMac ? 'Alt+Cmd+I' : 'Alt+Ctrl+I',
         click (item, focusedWindow) {
         if (focusedWindow) getSummary();;
        }
