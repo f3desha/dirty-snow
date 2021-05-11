@@ -6,6 +6,11 @@
             "height": 250,
             "template": "./renderers/summary/summary.html"
         },
+        "translator": {
+            "width": 400,
+            "height": 250,
+            "template": "./renderers/translator/translator.html"
+        },
         "linkedinlogin": {
             "width": 900,
             "height": 700,

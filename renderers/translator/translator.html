@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translator</title>
+    <link rel="stylesheet" href="../../styles/core.css" />
+    <link rel="stylesheet" href="../../styles/elements.css" />
+    <link rel="stylesheet" href="./translator.css" />
+</head>
+<body>
+    <div class="translator" style="margin-top: 70px;">
+        <table class="structure center">
+          <tr>
+            <td id="left_word" class="third" style="visibility: hidden;">Left</td>
+            <td id="center_word" class="third" style="visibility: hidden;">Center</td>
+            <td id="right_word" class="third" style="visibility: hidden;">Right</td>
+          </tr>
+          <tr>
+            <td class="third"><div id="left_button" class="button">Sinister</div></td>
+            <td class="third"><div id="center_button" class="button">Medium</div></td>
+            <td class="third"><div id="right_button" class="button">Dexter</div></td>
+          </tr>
+        </table>
+        <div class="validation-bar">
+          <span id="validation-bar-span" class="success">&nbsp;</span>
+        </div>
+    </div>
+    <script src="./translator.js"></script>
+</body>
+</html>

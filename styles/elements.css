@@ -160,3 +160,21 @@
   float: left;
 }
 /********AVATAR BAR END**************/
+
+/********STRUCTURE START************/
+.structure {
+  width: 100%;
+}
+.structure .half{
+  width: 50%;
+}
+.structure .third{
+  width: 33%;
+}
+.structure .fourth{
+  width: 25%;
+}
+.structure .tenth{
+  width: 10%;
+}
+/********STRUCTURE END**************/

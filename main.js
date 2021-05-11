@@ -43,6 +43,12 @@ const template = [
        }
       },
       {
+        label: 'Translator',
+        click (item, focusedWindow) {
+        if (focusedWindow) getTranslator();;id="left_button"
+       }
+      },
+      {
         label: 'Login',
         id: 'login-menu',
         accelerator: isMac ? 'Alt+Cmd+L' : 'Alt+Ctrl+L',
@@ -97,6 +103,10 @@ function userLoggedOut(){
 
 function getSummary(){
   createSubwindow(config.subwindows.summary);  
+}
+
+function getTranslator(){
+  createSubwindow(config.subwindows.translator);  
 }
 
 function createSubwindow(config){
