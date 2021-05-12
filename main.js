@@ -80,7 +80,7 @@ mainMenu = Menu.buildFromTemplate(template);
 
 /***********FUNCTIONS******** */
 function linkedinLogin(){
-  createSubwindow(config.subwindows.linkedinlogin);
+  createSubwindow(config.subwindows.linkedinlogin_12052021);
 }
 
 function linkedinLogout(){
@@ -101,11 +101,11 @@ function userLoggedOut(){
 }
 
 function getSummary(){
-  createSubwindow(config.subwindows.summary);  
+  createSubwindow(config.subwindows.summary_12052021);  
 }
 
 function getTranslator(){
-  createSubwindow(config.subwindows.translator);  
+  createSubwindow(config.subwindows.translator_12052021);  
 }
 
 function createSubwindow(config){

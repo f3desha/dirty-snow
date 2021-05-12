@@ -1,21 +1,21 @@
 {
     "subwindows":
     {
-        "summary": {
+        "summary_12052021": {
             "width": 400,
             "height": 250,
-            "template": "./renderers/summary/summary.html"
+            "template": "./renderers/summary_12052021/summary.html"
         },
-        "translator": {
+        "translator_12052021": {
             "width": 400,
             "height": 250,
-            "template": "./renderers/translator/translator.html"
+            "template": "./renderers/translator_12052021/translator.html"
         },
-        "linkedinlogin": {
+        "linkedinlogin_12052021": {
             "width": 900,
             "height": 700,
             "show": false,
-            "template": "./renderers/linkedin-login/linkedin-login.html"
+            "template": "./renderers/linkedin-login_12052021/linkedin-login.html"
         }
     }
 }
