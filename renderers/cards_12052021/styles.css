@@ -1,0 +1,19 @@
+body{
+    background-color: rgb(168, 168, 168);
+    margin: 0;
+    padding: 0;
+}
+
+.cards img {
+    display: inline-block;
+    height: 240px;
+    width: 157px;
+    padding: 0px;
+    margin: 0px;
+    border: 4px solid rgb(168, 168, 168);
+    cursor: pointer;
+}
+
+.cards img:hover {
+    border: 4px solid white;
+}

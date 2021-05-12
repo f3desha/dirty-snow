@@ -36,15 +36,22 @@ const template = [
     label: 'Menu',
     submenu: [
       {
-        label: 'Summary Example 12-05-2021',
+        label: 'Summary Example - 12-05-2021',
         click (item, focusedWindow) {
-        if (focusedWindow) getSummary();;
+        if (focusedWindow) getSummary();
        }
       },
       {
-        label: 'Translator Example 12-05-2021',
+        label: 'Translator Example - 12-05-2021',
         click (item, focusedWindow) {
-        if (focusedWindow) getTranslator();;id="left_button"
+        if (focusedWindow) getTranslator();
+       }
+      },
+      {
+        label: 'Cards Example - 12-05-2021',
+        accelerator: isMac ? 'Cmd+I' : 'Ctrl+I',
+        click (item, focusedWindow) {
+        if (focusedWindow) getCards();
        }
       },
       {
@@ -66,14 +73,14 @@ const template = [
       }
     ]
   },
-  // {
-  //   label: 'View',
-  //   submenu: [
-  //     { role: 'reload' },
-  //     { role: 'forceReload' },
-  //     { role: 'toggleDevTools' },
-  //   ]
-  // }
+  {
+    label: 'View',
+    submenu: [
+      { role: 'reload' },
+      { role: 'forceReload' },
+      { role: 'toggleDevTools' },
+    ]
+  }
 ]
 mainMenu = Menu.buildFromTemplate(template);
 /*******MENU TEMPLATE ENDS*****************/
@@ -108,6 +115,10 @@ function getTranslator(){
   createSubwindow(config.subwindows.translator_12052021);  
 }
 
+function getCards(){
+  createSubwindow(config.subwindows.cards_12052021);  
+}
+
 function createSubwindow(config){
    const subWindow = new BrowserWindow({
     minWidth: config.width,
@@ -124,7 +135,7 @@ function createSubwindow(config){
   });
   subWindow.removeMenu();
   subWindow.loadFile(`./renderers/${config.id}/View.html`);
-  //subWindow.webContents.openDevTools();
+  // subWindow.webContents.openDevTools();
   return subWindow;
 }
 

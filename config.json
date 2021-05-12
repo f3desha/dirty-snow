@@ -16,6 +16,11 @@
             "width": 900,
             "height": 700,
             "show": false
+        },
+        "cards_12052021": {
+            "id": "cards_12052021",
+            "width": 840,
+            "height": 290
         }
     }
 }
