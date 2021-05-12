@@ -3,7 +3,7 @@ const BaseModel = require("../../modules/Base/BaseModel");
 module.exports = class Model extends BaseModel {
     constructor(){
         super();
-        const self = this;
+        const Window = this;
 
         //Defining elements location
         this.windowElements = {
@@ -29,13 +29,13 @@ module.exports = class Model extends BaseModel {
         };
     
         this.windowElements.buttons.getit.init = () => {
-            this.windowElements.buttons.getit.location.addEventListener("click", function (e) {
-                self.windowElements.spans.validation_bar.location.innerHTML = self.windowElements.spans.first.location.value + self.windowElements.spans.second.location.value;
+            Window.get('buttons','getit').addEventListener("click", function (e) {
+                Window.get('spans','validation_bar').innerHTML = Window.get('spans','first').value + Window.get('spans','second').value;
             }); 
         }
 
         this.windowElements.buttons.close.init = () => {
-            this.windowElements.buttons.close.location.addEventListener("click", function (e) {
+            Window.get('buttons','close').addEventListener("click", function (e) {
                 let window = remote.getCurrentWindow();
                 window.close();
             }); 
