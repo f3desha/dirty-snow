@@ -124,7 +124,7 @@ function createSubwindow(config){
   });
   subWindow.removeMenu();
   subWindow.loadFile(config.template);
-  // subWindow.webContents.openDevTools();
+   subWindow.webContents.openDevTools();
   return subWindow;
 }
 

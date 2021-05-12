@@ -9,7 +9,7 @@
         "translator_12052021": {
             "width": 400,
             "height": 250,
-            "template": "./renderers/translator_12052021/translator.html"
+            "template": "./renderers/translator_12052021/View.html"
         },
         "linkedinlogin_12052021": {
             "width": 900,
