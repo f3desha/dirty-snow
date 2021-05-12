@@ -3,7 +3,7 @@ const BaseModel = require("../../modules/Base/BaseModel");
 module.exports = class Model extends BaseModel {
     constructor(){
         super();
-        const Window = this;
+        const DS = this;
 
         //Defining elements location
         this.windowElements = {
@@ -35,54 +35,54 @@ module.exports = class Model extends BaseModel {
         };
     
         //Defining elements behavior
-        Window.windowElements.buttons.left_button.init = () => {
+        DS.windowElements.buttons.left_button.init = () => {
 
-            Window.get('buttons','left_button').addEventListener("click", function (e) {
-                Window.get('spans','left_word').style.visibility = "visible";
-                Window.get('spans','center_word').style.visibility = "hidden";
-                Window.get('spans','right_word').style.visibility = "hidden";
+            DS.get('buttons','left_button').addEventListener("click", function (e) {
+                DS.get('spans','left_word').style.visibility = "visible";
+                DS.get('spans','center_word').style.visibility = "hidden";
+                DS.get('spans','right_word').style.visibility = "hidden";
             }); 
     
-            Window.get('buttons','left_button').addEventListener("mouseover", function (e) {
-                Window.get('spans','validation_bar').innerHTML = 'Press left button';
+            DS.get('buttons','left_button').addEventListener("mouseover", function (e) {
+                DS.get('spans','validation_bar').innerHTML = 'Press left button';
             }); 
             
-            Window.get('buttons','left_button').addEventListener("mouseout", function (e) {
-                Window.get('spans','validation_bar').innerHTML = '&nbsp';
+            DS.get('buttons','left_button').addEventListener("mouseout", function (e) {
+                DS.get('spans','validation_bar').innerHTML = '&nbsp';
             }); 
         }
 
-        Window.windowElements.buttons.center_button.init = () => {
+        DS.windowElements.buttons.center_button.init = () => {
 
-            Window.get('buttons','center_button').addEventListener("click", function (e) {
-                Window.get('spans','left_word').style.visibility = "hidden";
-                Window.get('spans','center_word').style.visibility = "visible";
-                Window.get('spans','right_word').style.visibility = "hidden";
+            DS.get('buttons','center_button').addEventListener("click", function (e) {
+                DS.get('spans','left_word').style.visibility = "hidden";
+                DS.get('spans','center_word').style.visibility = "visible";
+                DS.get('spans','right_word').style.visibility = "hidden";
             }); 
     
-            Window.get('buttons','center_button').addEventListener("mouseover", function (e) {
-                Window.get('spans','validation_bar').innerHTML = 'Press center button';
+            DS.get('buttons','center_button').addEventListener("mouseover", function (e) {
+                DS.get('spans','validation_bar').innerHTML = 'Press center button';
             }); 
             
-            Window.get('buttons','center_button').addEventListener("mouseout", function (e) {
-                Window.get('spans','validation_bar').location.innerHTML = '&nbsp';
+            DS.get('buttons','center_button').addEventListener("mouseout", function (e) {
+                DS.get('spans','validation_bar').location.innerHTML = '&nbsp';
             }); 
         }
 
-        Window.windowElements.buttons.right_button.init = () => {
+        DS.windowElements.buttons.right_button.init = () => {
 
-            Window.get('buttons','right_button').addEventListener("click", function (e) {
-                Window.get('spans','left_word').style.visibility = "hidden";
-                Window.get('spans','center_word').style.visibility = "hidden";
-                Window.get('spans','right_word').style.visibility = "visible";
+            DS.get('buttons','right_button').addEventListener("click", function (e) {
+                DS.get('spans','left_word').style.visibility = "hidden";
+                DS.get('spans','center_word').style.visibility = "hidden";
+                DS.get('spans','right_word').style.visibility = "visible";
             }); 
     
-            Window.get('buttons','right_button').addEventListener("mouseover", function (e) {
-                Window.get('spans','validation_bar').innerHTML = 'Press right button';
+            DS.get('buttons','right_button').addEventListener("mouseover", function (e) {
+                DS.get('spans','validation_bar').innerHTML = 'Press right button';
             }); 
             
-            Window.get('buttons','right_button').addEventListener("mouseout", function (e) {
-                Window.get('spans','validation_bar').innerHTML = '&nbsp';
+            DS.get('buttons','right_button').addEventListener("mouseout", function (e) {
+                DS.get('spans','validation_bar').innerHTML = '&nbsp';
             }); 
         }
 

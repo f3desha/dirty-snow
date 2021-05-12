@@ -4,7 +4,7 @@ const linkedinModule = require('../../modules/linkedin-helper/Linkedin');
 module.exports = class Model extends BaseModel {
     constructor(){
         super();
-        const self = this;
+        const DS = this;
 
         //Defining elements location
         this.windowElements = {
@@ -24,7 +24,7 @@ module.exports = class Model extends BaseModel {
         };
 
         this.windowElements.backgrounders.linkReceiver.init = () => {
-          self.getAuthLink();
+          DS.getAuthLink();
         };
 
         //Mandatory section for running Model initialization
