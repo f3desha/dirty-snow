@@ -123,8 +123,8 @@ function createSubwindow(config){
     }
   });
   subWindow.removeMenu();
-  subWindow.loadFile(config.template);
-   subWindow.webContents.openDevTools();
+  subWindow.loadFile(`./renderers/${config.id}/View.html`);
+  //subWindow.webContents.openDevTools();
   return subWindow;
 }
 

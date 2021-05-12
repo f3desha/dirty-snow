@@ -2,20 +2,20 @@
     "subwindows":
     {
         "summary_12052021": {
+            "id": "summary_12052021",
             "width": 400,
-            "height": 250,
-            "template": "./renderers/summary_12052021/summary.html"
+            "height": 250
         },
         "translator_12052021": {
+            "id": "translator_12052021",
             "width": 400,
-            "height": 250,
-            "template": "./renderers/translator_12052021/View.html"
+            "height": 250
         },
         "linkedinlogin_12052021": {
+            "id": "linkedin-login_12052021",
             "width": 900,
             "height": 700,
-            "show": false,
-            "template": "./renderers/linkedin-login_12052021/linkedin-login.html"
+            "show": false
         }
     }
 }

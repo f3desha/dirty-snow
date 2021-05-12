@@ -1,61 +1,93 @@
-module.exports = class Model {
+const BaseModel = require("../../modules/Base/BaseModel");
+
+module.exports = class Model extends BaseModel {
     constructor(){
-        this.left_word = document.querySelector('#left_word');
-        this.center_word = document.querySelector('#center_word');
-        this.right_word = document.querySelector('#right_word');
-    }
-
-    leftButtonInit(){
+        super();
         const self = this;
 
-        document.getElementById("left_button").addEventListener("click", function (e) {
-            self.left_word.style.visibility = "visible";
-            self.center_word.style.visibility = "hidden";
-            self.right_word.style.visibility = "hidden";
-        }); 
+        //Defining elements location
+        this.windowElements = {
+            buttons: {
+                left_button:    {
+                    location: document.getElementById("left_button")
+                },
+                center_button:  {
+                    location: document.getElementById("center_button")
+                },
+                right_button:   {
+                    location: document.getElementById("right_button")
+                }
+            },
+            spans: {
+                validation_bar: {
+                    location: document.querySelector('#validation-bar-span')
+                },
+                left_word:      {
+                    location: document.querySelector('#left_word')
+                },
+                center_word:    {
+                    location: document.querySelector('#center_word')
+                },
+                right_word:     {
+                    location: document.querySelector('#right_word')
+                }
+            },
+        };
+    
+        //Defining elements behavior
+        this.windowElements.buttons.left_button.init = () => {
 
-        document.getElementById("left_button").addEventListener("mouseover", function (e) {
-            document.querySelector('#validation-bar-span').innerHTML = 'Press left button';
-        }); 
-        
-        document.getElementById("left_button").addEventListener("mouseout", function (e) {
-            document.querySelector('#validation-bar-span').innerHTML = '&nbsp';
-        }); 
+            this.windowElements.buttons.left_button.location.addEventListener("click", function (e) {
+                self.windowElements.spans.left_word.location.style.visibility = "visible";
+                self.windowElements.spans.center_word.location.style.visibility = "hidden";
+                self.windowElements.spans.right_word.location.style.visibility = "hidden";
+            }); 
+    
+            this.windowElements.buttons.left_button.location.addEventListener("mouseover", function (e) {
+                self.windowElements.spans.validation_bar.location.innerHTML = 'Press left button';
+            }); 
+            
+            this.windowElements.buttons.left_button.location.addEventListener("mouseout", function (e) {
+                self.windowElements.spans.validation_bar.location.innerHTML = '&nbsp';
+            }); 
+        }
+
+        this.windowElements.buttons.center_button.init = () => {
+
+            self.windowElements.buttons.center_button.location.addEventListener("click", function (e) {
+                self.windowElements.spans.left_word.location.style.visibility = "hidden";
+                self.windowElements.spans.center_word.location.style.visibility = "visible";
+                self.windowElements.spans.right_word.location.style.visibility = "hidden";
+            }); 
+    
+            self.windowElements.buttons.center_button.location.addEventListener("mouseover", function (e) {
+                self.windowElements.spans.validation_bar.location.innerHTML = 'Press center button';
+            }); 
+            
+            self.windowElements.buttons.center_button.location.addEventListener("mouseout", function (e) {
+                self.windowElements.spans.validation_bar.location.innerHTML = '&nbsp';
+            }); 
+        }
+
+        this.windowElements.buttons.right_button.init = () => {
+
+            this.windowElements.buttons.right_button.location.addEventListener("click", function (e) {
+                self.windowElements.spans.left_word.location.style.visibility = "hidden";
+                self.windowElements.spans.center_word.location.style.visibility = "hidden";
+                self.windowElements.spans.right_word.location.style.visibility = "visible";
+            }); 
+    
+            this.windowElements.buttons.right_button.location.addEventListener("mouseover", function (e) {
+                self.windowElements.spans.validation_bar.location.innerHTML = 'Press right button';
+            }); 
+            
+            this.windowElements.buttons.right_button.location.addEventListener("mouseout", function (e) {
+                self.windowElements.spans.validation_bar.location.innerHTML = '&nbsp';
+            }); 
+        }
+
+        //Mandatory section for running Model initialization
+        super.init();
     }
 
-    centerButtonInit(){
-        const self = this;
-
-        document.getElementById("center_button").addEventListener("click", function (e) {
-            self.left_word.style.visibility = "hidden";
-            self.center_word.style.visibility = "visible";
-            self.right_word.style.visibility = "hidden";
-        }); 
-
-        document.getElementById("center_button").addEventListener("mouseover", function (e) {
-            document.querySelector('#validation-bar-span').innerHTML = 'Press center button';
-        }); 
-        
-        document.getElementById("center_button").addEventListener("mouseout", function (e) {
-            document.querySelector('#validation-bar-span').innerHTML = '&nbsp';
-        }); 
-    }
-
-    rightButtonInit(){
-        const self = this;
-
-        document.getElementById("right_button").addEventListener("click", function (e) {
-            self.left_word.style.visibility = "hidden";
-            self.center_word.style.visibility = "hidden";
-            self.right_word.style.visibility = "visible";
-        }); 
-
-        document.getElementById("right_button").addEventListener("mouseover", function (e) {
-            document.querySelector('#validation-bar-span').innerHTML = 'Press right button';
-        }); 
-        
-        document.getElementById("right_button").addEventListener("mouseout", function (e) {
-            document.querySelector('#validation-bar-span').innerHTML = '&nbsp';
-        }); 
-     }
 }
