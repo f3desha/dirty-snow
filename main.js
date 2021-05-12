@@ -49,9 +49,15 @@ const template = [
       },
       {
         label: 'Cards Example - 12-05-2021',
-        accelerator: isMac ? 'Cmd+I' : 'Ctrl+I',
         click (item, focusedWindow) {
         if (focusedWindow) getCards();
+       }
+      },
+      {
+        label: 'Punchline Example - 12-05-2021',
+        accelerator: isMac ? 'Cmd+I' : 'Ctrl+I',
+        click (item, focusedWindow) {
+        if (focusedWindow) getPunchline();
        }
       },
       {
@@ -117,6 +123,10 @@ function getTranslator(){
 
 function getCards(){
   createSubwindow(config.subwindows.cards_12052021);  
+}
+
+function getPunchline(){
+  createSubwindow(config.subwindows.punchline_12052021);  
 }
 
 function createSubwindow(config){
