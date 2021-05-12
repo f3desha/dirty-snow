@@ -36,13 +36,13 @@ const template = [
     label: 'Menu',
     submenu: [
       {
-        label: 'Summary',
+        label: 'Summary Example 12-05-2021',
         click (item, focusedWindow) {
         if (focusedWindow) getSummary();;
        }
       },
       {
-        label: 'Translator',
+        label: 'Translator Example 12-05-2021',
         click (item, focusedWindow) {
         if (focusedWindow) getTranslator();;id="left_button"
        }
