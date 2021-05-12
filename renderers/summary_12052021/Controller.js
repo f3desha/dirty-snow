@@ -1,3 +1,3 @@
 var {remote} = require('electron');
 const thisWindowModel = require('./Model');
-const thisWindow = new thisWindowModel(remote);
+const thisWindow = new thisWindowModel();
