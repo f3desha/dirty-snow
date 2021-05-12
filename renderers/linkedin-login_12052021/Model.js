@@ -8,16 +8,11 @@ module.exports = class Model extends BaseModel {
 
         //Defining elements location
         this.windowElements = {
-            buttons: {
-             
-            },
-            spans: {
-               
+            backgrounders:{
+              linkReceiver: {}
             },
             listeners: {
-                tokenReceived: {
-                    
-                }
+              tokenReceived: {}
             }
         };
 
@@ -26,6 +21,10 @@ module.exports = class Model extends BaseModel {
                 var window = remote.getCurrentWindow();
                 window.close();
               })
+        };
+
+        this.windowElements.backgrounders.linkReceiver.init = () => {
+          self.getAuthLink();
         };
 
         //Mandatory section for running Model initialization
